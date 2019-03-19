@@ -1,0 +1,31 @@
+import java.net.*;
+import java.io.*;
+
+public class TCPServer {
+    public static void main(String[] args) throws IOException {
+        
+        int portNumber = Integer.parseInt(args[0]);
+
+        try ( 
+            ServerSocket serverSocket = new ServerSocket(portNumber);
+            Socket clientSocket = serverSocket.accept();            
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        ) 
+        {
+        
+        	String inputLine;        
+            
+
+            while ((inputLine = in.readLine()) != null) {
+                outputLine = kkp.processInput(inputLine);
+                out.println(outputLine);
+                if (outputLine.equals("Bye."))
+                    break;
+            }
+        } catch (IOException e) {
+            System.out.println("Exception caught when trying to listen on port "
+                + portNumber + " or listening for a connection");
+            System.out.println(e.getMessage());
+        }
+    }
+}
